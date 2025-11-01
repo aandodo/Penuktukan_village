@@ -118,4 +118,65 @@ document.addEventListener("DOMContentLoaded", function() {
             parallax.style.transform = `translateY(${speed}px)`;
         }
     });
+
+    const modal = document.getElementById("packageModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalList = document.getElementById("modalList");
+const modalPrice = document.getElementById("modalPrice");
+const closeBtn = document.querySelector(".close-btn");
+const bookNowBtn = document.getElementById("bookNowBtn");
+
+const packages = {
+  snorkeling: {
+    title: "Snorkeling Package",
+    list: [
+      "Mask, Life Jackets & Fins",
+      "Jukung (Traditional Boat)",
+      "Snorkeling Guide"
+    ],
+    price: "Rp. 150.000",
+    wa: "https://wa.me/6281529641821?text=Halo! Saya ingin memesan paket Snorkeling Penuktukan."
+  },
+  diving: {
+    title: "Diving Package",
+    list: [
+      "Masker", "Wight Belt", "Wetsuit", "Diving Boots", "Open Heel Fins",
+      "BCD / Buoyancy Control Device", "Regulator BCD", "Oxygen Tank", "Dive Computer", 
+      "Pressure Gauge", "Compass", "Octopus"
+    ],
+    price: "Rp. 1.000.000",
+    wa: "https://wa.me/6281529641821?text=Halo! Saya ingin memesan paket Diving Penuktukan."
+  }
+};
+
+// Buka modal
+document.querySelectorAll(".view-details").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const card = e.target.closest(".card");
+    const type = card.dataset.package;
+    const pkg = packages[type];
+
+    modalTitle.textContent = pkg.title;
+    modalList.innerHTML = pkg.list.map(item => `<span>${item}</span>`).join("");
+    modalPrice.textContent = pkg.price;
+    bookNowBtn.onclick = () => window.open(pkg.wa, "_blank");
+
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  });
+});
+
+// Tutup modal
+closeBtn.onclick = () => {
+  modal.classList.remove("active");
+  document.body.style.overflow = "auto";
+};
+modal.addEventListener("click", e => {
+  if (e.target === modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "auto";
+  }
+});
+
+
 });
